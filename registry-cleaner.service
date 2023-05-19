@@ -7,7 +7,8 @@ Wants=registry-cleaner.timer
 Type=oneshot
 User=registry-cleaner
 Group=docker
-ExecStart=/usr/bin/python /opt/registry-cleaner/main.py
+WorkingDirectory=/var/lib/registry-cleaner
+ExecStart=/usr/bin/python /var/lib/registry-cleaner/main.py
 
 [Install]
 WantedBy=network-online.target

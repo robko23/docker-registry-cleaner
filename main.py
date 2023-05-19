@@ -25,9 +25,9 @@ def execute_regctl(cmd: str) -> str:
 
 def garbage_collect_registry():
     print("Running garbage collection")
-    subprocess.check_output(f"docker exec {REGISTRY_CONTAINER_NAME} /bin/registry garbage-collect /etc/docker/registry/config.yml --delete-untagged")
+    subprocess.check_output(f"docker exec {REGISTRY_CONTAINER_NAME} /bin/registry garbage-collect /etc/docker/registry/config.yml --delete-untagged", shell=True)
     print("Restating container")
-    subprocess.check_output(f"docker restart {REGISTRY_CONTAINER_NAME}")
+    subprocess.check_output(f"docker restart {REGISTRY_CONTAINER_NAME}", shell=True)
 
 def load_repos():
     output = execute_regctl(f"repo ls {REGISTRY}").strip()
@@ -81,6 +81,7 @@ def main():
         garbage_collect_registry()
         send_mail(f"Successfully cleaned {removed_tags} tags", f"Successfully cleaned {removed_tags} tags")
     except Exception as e:
+        print(e)
         send_mail(f"Exception!", str(e))
         pass
     pass

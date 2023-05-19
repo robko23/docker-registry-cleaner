@@ -39,12 +39,13 @@ cp ./registry-cleaner.service /etc/systemd/system
 echo "Enabling timer"
 systemctl daemon-reload
 systemctl enable registry-cleaner.timer
+systemctl start registry-cleaner.timer
 
 echo "Setting up registry connection"
 read -p "Enter registry url: " registry_url
 read -p "Username: " username
 read -sp "Password: " password
 
-sudo -u registry-cleaner /var/lib/registry-cleaner/regctl login $(registry_url) -u $(username) -p $(password)
+sudo -u registry-cleaner /var/lib/registry-cleaner/regctl registry login $registry_url -u $username -p $password
 
 echo "Done"
