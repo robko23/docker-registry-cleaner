@@ -1,0 +1,12 @@
+[Unit]
+Description=Automatic registry cleanup
+Wants=network-online.target
+
+[Timer]
+OnCalendar=weekly
+AccuracySec=1h
+Unit=registry-cleaner.service
+Persistent=true
+
+[Install]
+WantedBy=timers.target
